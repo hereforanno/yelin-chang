@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yelin Chang</title>
+<meta name="description" content="Yelin Chang — London-based operations and business development professional. Five years across capital markets, manufacturing and a CEO's office; MSc, Imperial College London.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #16302B;          /* pine ink: rail, strong surfaces */
+    --paper: #F5F6F3;        /* page background */
+    --surface: #FFFFFF;
+    --text: #1D2321;         /* graphite body text */
+    --muted: #56625E;        /* secondary text, 5.9:1 on paper */
+    --accent: #2E6B5E;       /* verdigris: interactive + data highlight */
+    --accent-soft: #DCE7E3;
+    --rule: #D8DDD9;
+    --dot: #B9C3BF;
+    --on-ink: #F5F6F3;
+    --on-ink-muted: #B7C6C1;
+    --focus: #2E6B5E;
+    --on-accent: #FFFFFF;
+
+    --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --step--1: 0.875rem;
+    --step-0: 1rem;
+    --step-1: 1.1875rem;
+    --step-2: 1.5rem;
+    --step-3: 2.125rem;
+    --step-4: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem);
+
+    --rail-w: 300px;
+    --radius: 6px;
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #101614; --surface: #17201D; --text: #E6EBE8; --muted: #9EADA8;
+      --accent: #7FB8A8; --accent-soft: #1F332D; --rule: #2A3632; --dot: #3B4A45;
+      --ink: #15241F; --on-ink: #E6EBE8; --on-ink-muted: #93A59F; --focus: #7FB8A8; --on-accent: #0B1210;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #101614; --surface: #17201D; --text: #E6EBE8; --muted: #9EADA8;
+    --accent: #7FB8A8; --accent-soft: #1F332D; --rule: #2A3632; --dot: #3B4A45;
+    --ink: #15241F; --on-ink: #E6EBE8; --on-ink-muted: #93A59F; --focus: #7FB8A8; --on-accent: #0B1210;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--paper); color: var(--text);
+    font-family: var(--sans); font-size: var(--step-0); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+
+  .skip {
+    position: absolute; left: 16px; top: -60px; z-index: 50;
+    background: var(--surface); color: var(--text); padding: 10px 14px; border-radius: var(--radius);
+    text-decoration: none; font-weight: 500;
+  }
+  .skip:focus { top: 16px; }
+
+  /* ---------- Layout: dossier spine + content ---------- */
+  .page { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100vh; }
+  @media (min-width: 960px) {
+    .page { grid-template-columns: var(--rail-w) minmax(0, 1fr); }
+  }
+
+  .rail {
+    background: var(--ink); color: var(--on-ink);
+    padding: 28px 16px 24px;
+  }
+  @media (min-width: 960px) {
+    .rail {
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      padding: 48px 36px 36px; display: flex; flex-direction: column;
+    }
+  }
+  .rail h1 {
+    font-family: var(--serif); font-weight: 500; font-size: var(--step-3);
+    line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 10px;
+  }
+  .rail .role { margin: 0; color: var(--on-ink-muted); font-size: var(--step-0); max-width: 24ch; }
+  .rail .place { margin: 6px 0 0; color: var(--on-ink-muted); font-size: var(--step--1); }
+
+  .nav { margin-top: 28px; }
+  .nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  @media (min-width: 960px) { .nav ul { flex-direction: column; gap: 2px; } }
+  .nav a {
+    display: inline-flex; align-items: center; min-height: 44px;
+    color: var(--on-ink-muted); text-decoration: none; font-size: var(--step-0);
+    transition: color .2s var(--ease);
+  }
+  @media (min-width: 960px) {
+    .nav a { padding-left: 16px; border-left: 2px solid transparent; transition: color .2s var(--ease), border-color .2s var(--ease); }
+    .nav a[aria-current="true"] { border-left-color: var(--on-ink); }
+  }
+  .nav a:hover, .nav a[aria-current="true"] { color: var(--on-ink); }
+  .rail :focus-visible { outline-color: var(--on-ink); }
+
+  .rail-contact { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
+  @media (min-width: 960px) { .rail-contact { margin-top: auto; padding-top: 32px; flex-direction: column; } }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 44px; padding: 0 18px; border-radius: var(--radius);
+    font: 500 var(--step--1)/1 var(--sans); text-decoration: none; cursor: pointer;
+    border: 1px solid transparent; transition: background-color .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+  }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .btn-light { background: var(--on-ink); color: var(--ink); }
+  .btn-light:hover { background: #FFFFFF; }
+  .btn-ghost-light { color: var(--on-ink); border-color: rgba(245,246,243,.35); background: transparent; }
+  .btn-ghost-light:hover { border-color: var(--on-ink); }
+
+  main { padding: 40px 16px 64px; }
+  @media (min-width: 640px) { main { padding: 56px 40px 80px; } }
+  @media (min-width: 1200px) { main { padding: 80px 72px 96px; } }
+  .wrap { max-width: 760px; }
+
+  section { scroll-margin-top: 24px; }
+  section + section { margin-top: 88px; }
+  h2 {
+    font-family: var(--serif); font-weight: 500; font-size: var(--step-2);
+    line-height: 1.25; margin: 0 0 20px; letter-spacing: -0.005em;
+  }
+  p { margin: 0 0 16px; max-width: 68ch; }
+  .lede { color: var(--muted); }
+
+  /* ---------- Intro ---------- */
+  .intro h2 {
+    font-size: var(--step-4); line-height: 1.12; letter-spacing: -0.015em;
+    max-width: 20ch; margin-bottom: 28px;
+  }
+  .intro p { font-size: var(--step-1); line-height: 1.6; color: var(--muted); max-width: 58ch; }
+  .facts { display: grid; grid-template-columns: 1fr; gap: 0; margin: 36px 0 0; padding: 0; border-top: 1px solid var(--rule); }
+  @media (min-width: 640px) { .facts { grid-template-columns: repeat(3, 1fr); } }
+  .facts > div { padding: 16px 0; border-bottom: 1px solid var(--rule); }
+  @media (min-width: 640px) { .facts > div { padding: 18px 20px 18px 0; } }
+  .facts dt { font-size: var(--step--1); color: var(--muted); }
+  .facts dd { margin: 2px 0 0; font-weight: 500; }
+
+  /* ---------- Screening: the one bold element ---------- */
+  .screen {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 10px;
+    padding: 24px 16px; margin-top: 8px;
+  }
+  @media (min-width: 640px) { .screen { padding: 32px; } }
+  .stages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0 0 28px; padding: 0; list-style: none; }
+  .stage {
+    width: 100%; min-height: 72px; text-align: left; cursor: pointer;
+    background: transparent; color: var(--text);
+    border: 1px solid var(--rule); border-radius: var(--radius); padding: 12px;
+    font: inherit; transition: border-color .2s var(--ease), background-color .2s var(--ease);
+  }
+  .stage:hover { border-color: var(--muted); }
+  .stage[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+  .stage .n { display: block; font-family: var(--serif); font-size: var(--step-3); line-height: 1; font-weight: 500; }
+  .stage .l { display: block; margin-top: 6px; font-size: var(--step--1); color: var(--muted); line-height: 1.3; }
+  .stage[aria-pressed="true"] .l { color: var(--text); }
+  @media (max-width: 420px) {
+    .stages { grid-template-columns: minmax(0, 1fr); }
+    .stage { min-height: 56px; display: flex; align-items: baseline; gap: 12px; }
+    .stage .n { font-size: var(--step-2); }
+    .stage .l { margin-top: 0; }
+  }
+
+  .field {
+    display: grid; grid-template-columns: repeat(10, 1fr); gap: 10px;
+    max-width: 420px; margin: 0 0 24px;
+  }
+  @media (min-width: 640px) { .field { gap: 14px; } }
+  .dot {
+    aspect-ratio: 1; border-radius: 50%;
+    background: var(--dot); border: 2px solid transparent;
+    transition: opacity .45s var(--ease), transform .45s var(--ease), background-color .45s var(--ease), border-color .45s var(--ease);
+    transition-delay: calc(var(--i) * 6ms);
+  }
+  .field[data-stage="2"] .dot,
+  .field[data-stage="3"] .dot { opacity: .2; }
+  .field[data-stage="2"] .dot.rec { opacity: 1; }
+  .field[data-stage="2"] .dot.growth { background: var(--accent); }
+  .field[data-stage="2"] .dot.main { background: transparent; border-color: var(--accent); }
+  .field[data-stage="3"] .dot.rec { opacity: .35; }
+  .field[data-stage="3"] .dot.adv { opacity: 1; background: var(--text); transform: scale(1.15); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0 0 14px; padding: 0; list-style: none; font-size: var(--step--1); color: var(--muted); min-height: 1.4em; }
+  .legend li { display: inline-flex; align-items: center; gap: 8px; }
+  .key { width: 12px; height: 12px; border-radius: 50%; display: inline-block; border: 2px solid transparent; }
+  .key-all { background: var(--dot); }
+  .key-growth { background: var(--accent); }
+  .key-main { border-color: var(--accent); }
+  .key-adv { background: var(--text); }
+  .caption { margin: 0; font-size: var(--step-0); max-width: 60ch; min-height: 3.2em; }
+
+  /* ---------- Experience timeline (a real sequence) ---------- */
+  .roles { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .roles > li { border-bottom: 1px solid var(--rule); }
+  details summary {
+    list-style: none; cursor: pointer; padding: 22px 44px 22px 0; position: relative;
+    display: grid; grid-template-columns: 1fr; gap: 4px;
+  }
+  @media (min-width: 640px) {
+    details summary { grid-template-columns: 9.5rem 1fr; column-gap: 24px; row-gap: 4px; }
+    details summary .when { grid-row: 1 / span 2; }
+    details summary h3, details summary .org { grid-column: 2; }
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after {
+    content: ""; position: absolute; right: 8px; top: 30px; width: 10px; height: 10px;
+    border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+    transform: rotate(45deg); transition: transform .25s var(--ease);
+  }
+  details[open] summary::after { transform: rotate(-135deg); top: 34px; }
+  .when { color: var(--muted); font-size: var(--step--1); padding-top: 3px; font-variant-numeric: tabular-nums; }
+  summary h3 { font-family: var(--serif); font-weight: 500; font-size: var(--step-1); line-height: 1.3; margin: 0; transition: color .2s var(--ease); }
+  summary .org { display: block; color: var(--muted); font-size: var(--step--1); }
+  summary:hover h3 { color: var(--accent); }
+  .detail { padding: 0 0 26px; }
+  @media (min-width: 640px) { .detail { padding-left: calc(9.5rem + 24px); } }
+  .detail ul { margin: 0; padding-left: 1.1em; }
+  .detail li { margin: 0 0 10px; max-width: 64ch; }
+  .detail li::marker { color: var(--accent); }
+  .detail .note { color: var(--muted); font-size: var(--step--1); margin: 0 0 12px; }
+
+  /* ---------- Education + beyond ---------- */
+  .pairs { display: grid; grid-template-columns: 1fr; gap: 0; margin: 0; border-top: 1px solid var(--rule); }
+  .pairs > div { padding: 20px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 1fr; gap: 4px; }
+  @media (min-width: 640px) { .pairs > div { grid-template-columns: 9.5rem 1fr; gap: 24px; } }
+  .pairs dt { color: var(--muted); font-size: var(--step--1); padding-top: 3px; }
+  .pairs dd { margin: 0; }
+  .pairs strong { font-family: var(--serif); font-weight: 500; font-size: var(--step-1); display: block; line-height: 1.3; }
+  .pairs .sub { color: var(--muted); font-size: var(--step--1); display: block; margin-top: 4px; }
+  .pairs p { margin: 10px 0 0; }
+
+  /* ---------- Contact ---------- */
+  .contact-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+  .contact-list li {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px;
+    padding: 18px 0; border-bottom: 1px solid var(--rule);
+  }
+  .contact-list .label { color: var(--muted); font-size: var(--step--1); display: block; }
+  .contact-list .value { font-family: var(--serif); font-size: var(--step-1); text-decoration: none; word-break: break-word; }
+  .contact-list a.value:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+  .actions { display: flex; gap: 8px; }
+  .btn-quiet { background: transparent; color: var(--text); border-color: var(--rule); }
+  .btn-quiet:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-solid { background: var(--accent); color: var(--on-accent); }
+  .btn-solid:hover { background: var(--text); color: var(--paper); }
+
+  footer { margin-top: 72px; color: var(--muted); font-size: var(--step--1); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 16px);
+    background: var(--text); color: var(--paper); padding: 12px 18px; border-radius: var(--radius);
+    font-size: var(--step--1); opacity: 0; pointer-events: none;
+    transition: opacity .2s var(--ease), transform .2s var(--ease); max-width: calc(100vw - 32px);
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition-duration: 0.01ms !important; transition-delay: 0ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+
+<div class="page">
+  <header class="rail">
+    <h1>Yelin Chang</h1>
+    <p class="role">Operations and business development</p>
+    <p class="place">London, United Kingdom</p>
+
+    <nav class="nav" aria-label="Sections">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#judgement">How I assess</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="rail-contact">
+      <a class="btn btn-light" href="mailto:terry94055@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Email me
+      </a>
+      <a class="btn btn-ghost-light" href="https://www.linkedin.com/in/yelin-chang-09868a3b1/" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11H3v-11Zm6.5 0h3.8v1.5h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.75v5.7h-4v-5.05c0-1.2-.02-2.75-1.75-2.75-1.75 0-2.02 1.3-2.02 2.66v5.14h-4v-11Z"/></svg>
+        LinkedIn<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="content">
+    <div class="wrap">
+
+      <section id="about" class="intro" aria-labelledby="about-h">
+        <h2 id="about-h">I work out what is ready, and then help get it done.</h2>
+        <p>Five years across a securities firm in Phnom Penh, a biomass fuel plant in Taiwan and a property developer's CEO office. I assess businesses against clear standards, manage the people and suppliers who carry the work, and keep decision-makers on a single, reliable set of facts. Now completing an MSc at Imperial College London.</p>
+        <dl class="facts">
+          <div><dt>Based in</dt><dd>London</dd></div>
+          <div><dt>Focus</dt><dd>Operations, strategy, BD</dd></div>
+          <div><dt>Available</dt><dd>Full-time roles in London</dd></div>
+        </dl>
+      </section>
+
+      <section id="judgement" aria-labelledby="judgement-h">
+        <h2 id="judgement-h">How I assess</h2>
+        <p class="lede">As Head of Business Development at Phnom Penh Securities, I screened companies for IPO readiness against Cambodia Securities Exchange listing criteria. Step through what happened to the pipeline.</p>
+
+        <div class="screen">
+          <ul class="stages" role="group" aria-label="Screening stages">
+            <li><button class="stage" type="button" data-stage="1" aria-pressed="true" aria-controls="field caption"><span class="n">~50</span><span class="l">Assessed</span></button></li>
+            <li><button class="stage" type="button" data-stage="2" aria-pressed="false" aria-controls="field caption"><span class="n">13</span><span class="l">Recommended</span></button></li>
+            <li><button class="stage" type="button" data-stage="3" aria-pressed="false" aria-controls="field caption"><span class="n">3</span><span class="l">Advanced preparation</span></button></li>
+          </ul>
+
+          <div id="field" class="field" data-stage="1" aria-hidden="true"></div>
+
+          <ul class="legend" id="legend" aria-hidden="true"></ul>
+          <p class="caption" id="caption" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section id="experience" aria-labelledby="experience-h">
+        <h2 id="experience-h">Experience</h2>
+        <ol class="roles">
+          <li>
+            <details open>
+              <summary>
+                <span class="when">Jul 2024 – Aug 2025</span>
+                <h3>Personal Assistant to CEO</h3><span class="org">Citypark Development PLC, Phnom Penh — 26-storey, 108-unit property development</span>
+              </summary>
+              <div class="detail">
+                <ul>
+                  <li>Tracked more than USD 100K of monthly cash flow and 200–300 contractor, supplier and operating-expense payments a month in Excel and QuickBooks, giving the CEO one reconciled fact base for capital-release decisions.</li>
+                  <li>Ran concurrent cross-functional fit-out workstreams across 1 main contractor, 4 suppliers and 35 internal and site staff, aligning every party before works began so only exceptions reached the CEO.</li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>
+                <span class="when">Jan 2022 – May 2023</span>
+                <h3>Operations Manager</h3><span class="org">KD Energy Co., Ltd, Taichung</span>
+              </summary>
+              <div class="detail">
+                <ul>
+                  <li>Ran a biomass fuel plant on site, producing around 600 tonnes a month on a 2-shift, 6-day schedule with a 5-person team.</li>
+                  <li>Held breakdowns under 2 a month, typically resolved within about 2 hours, protecting uninterrupted supply to 2 industrial clients.</li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary>
+                <span class="when">Jul 2019 – Dec 2021</span>
+                <h3>Head of Business Development</h3><span class="org">Phnom Penh Securities PLC — promoted from Associate, Underwriting within 9 months</span>
+              </summary>
+              <div class="detail">
+                <ul>
+                  <li>Led 200+ consultative meetings with owner-founders and senior management, around 85% at CEO or founder level, to surface commercial priorities and test IPO readiness.</li>
+                  <li>Analysed the financial statements and management data of around 50 NDA-signed companies against CSX listing criteria and, with the Deputy General Manager, recommended the 13 strongest: 8 for the Growth Board and 5 for the Main Board. All 13 signed engagement letters and began restructuring toward listing standards.</li>
+                  <li>Built and led a 10-person team, and negotiated MOU and referral agreements with 2 Hong Kong brokerages and 1 UK securities firm that produced 4 cross-border signings, at an estimated USD 40–60K net profit each.</li>
+                  <li>As Associate, Underwriting, prepared financial statements and CSX listing documentation with CPA and ACCA colleagues for 2 bank bond-issuance candidates.</li>
+                </ul>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+      <section id="education" aria-labelledby="education-h">
+        <h2 id="education-h">Education and beyond work</h2>
+        <dl class="pairs">
+          <div>
+            <dt>2025 – 2026</dt>
+            <dd><strong>Imperial College London</strong><span class="sub">MSc Innovation, Entrepreneurship &amp; Management (expected Nov 2026)</span></dd>
+          </div>
+          <div>
+            <dt>Nov 2024</dt>
+            <dd><strong>Coventry University</strong><span class="sub">BA (Hons) Accounting and Finance for International Business, First Class Honours</span></dd>
+          </div>
+          <div>
+            <dt>2023 – Aug 2023</dt>
+            <dd><strong>Turning Brilliant Association</strong><span class="sub">Co-founder and charity initiative lead, Cambodia</span>
+              <p>Co-led a 3-day medical charity initiative with 50+ doctors and nurses, 130+ volunteers and 3 partner organisations, delivering free care to around 3,000 patients and care packages to 3,000+ households, and helping raise about USD&nbsp;156K. Stepped down in August 2023 and continued as a volunteer in <span style="white-space: nowrap">2024–2025</span>.</p></dd>
+          </div>
+          <div>
+            <dt>Jun 2024 – Oct 2025</dt>
+            <dd><strong>Central Bark Kitchen</strong><span class="sub">Founder, Cambodia</span>
+              <p>Grew a pet-food venture from a USD 100 stake to about USD 8K in cash and operating assets, iterating products on customer feedback with a 6-person informal team.</p></dd>
+          </div>
+          <div>
+            <dt>Languages</dt>
+            <dd>English (fluent, IELTS Academic 7.5), Mandarin Chinese (native), Taiwanese and Khmer (conversational)</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-h">
+        <h2 id="contact-h">Contact</h2>
+        <p class="lede">I'm looking for full-time roles in London. The quickest way to reach me is by email.</p>
+        <ul class="contact-list">
+          <li>
+            <div><span class="label">Email</span><a class="value" href="mailto:terry94055@gmail.com">terry94055@gmail.com</a></div>
+            <div class="actions">
+              <button class="btn btn-quiet" type="button" data-copy="terry94055@gmail.com" data-done="Email address copied">Copy</button>
+              <a class="btn btn-solid" href="mailto:terry94055@gmail.com">Send email</a>
+            </div>
+          </li>
+          <li>
+            <div><span class="label">LinkedIn</span><a class="value" href="https://www.linkedin.com/in/yelin-chang-09868a3b1/" target="_blank" rel="noopener noreferrer">linkedin.com/in/yelin-chang-09868a3b1<span class="sr-only"> (opens in a new tab)</span></a></div>
+            <div class="actions">
+              <a class="btn btn-solid" href="https://www.linkedin.com/in/yelin-chang-09868a3b1/" target="_blank" rel="noopener noreferrer">View profile<span class="sr-only"> (opens in a new tab)</span></a>
+            </div>
+          </li>
+        </ul>
+        <footer>© 2026 Yelin Chang</footer>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  /* ---------- Screening field ---------- */
+  const field = document.getElementById('field');
+  const legend = document.getElementById('legend');
+  const caption = document.getElementById('caption');
+  const TOTAL = 50;
+  // Fixed positions so the picture is stable between visits.
+  const growth = [2, 7, 11, 18, 23, 29, 36, 44];
+  const main = [5, 14, 26, 33, 41];
+  const advanced = [7, 26, 36];
+
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('span');
+    d.className = 'dot';
+    d.style.setProperty('--i', i);
+    if (growth.includes(i)) d.classList.add('rec', 'growth');
+    if (main.includes(i)) d.classList.add('rec', 'main');
+    if (advanced.includes(i)) d.classList.add('adv');
+    field.appendChild(d);
+  }
+
+  const stages = {
+    1: {
+      legend: [['key-all', 'One company']],
+      caption: 'Around 50 companies signed NDAs and went through a first-stage review of their financial statements and management data against listing criteria.'
+    },
+    2: {
+      legend: [['key-growth', 'Growth Board (8)'], ['key-main', 'Main Board (5)']],
+      caption: 'With the Deputy General Manager, I recommended the 13 strongest, each matched to the board that fit it. All 13 signed engagement letters and began restructuring toward listing standards.'
+    },
+    3: {
+      legend: [['key-adv', 'Advanced listing preparation (3)']],
+      caption: 'Three reached advanced listing preparation before the pandemic and market conditions paused the work.'
+    }
+  };
+
+  const buttons = document.querySelectorAll('.stage');
+  function show(n) {
+    field.dataset.stage = n;
+    buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.stage === String(n))));
+    legend.innerHTML = stages[n].legend
+      .map(([cls, text]) => `<li><span class="key ${cls}"></span>${text}</li>`).join('');
+    caption.textContent = stages[n].caption;
+  }
+  buttons.forEach(b => b.addEventListener('click', () => show(b.dataset.stage)));
+  show(1);
+
+  /* ---------- Copy to clipboard ---------- */
+  const toast = document.getElementById('toast');
+  let timer;
+  function notify(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+  async function copy(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'absolute'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (_) {}
+      ta.remove();
+      return ok;
+    }
+  }
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const ok = await copy(btn.dataset.copy);
+      notify(ok ? btn.dataset.done : 'Copy failed. Select the text and copy it manually.');
+    });
+  });
+
+  /* ---------- Section highlight in the nav ---------- */
+  const links = [...document.querySelectorAll('.nav a')];
+  const byId = Object.fromEntries(links.map(a => [a.getAttribute('href').slice(1), a]));
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(a => a.removeAttribute('aria-current'));
+          const a = byId[e.target.id];
+          if (a) a.setAttribute('aria-current', 'true');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    document.querySelectorAll('main section').forEach(s => io.observe(s));
+  }
+})();
+</script>
+</body>
+</html>
